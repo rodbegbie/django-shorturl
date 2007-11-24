@@ -15,7 +15,7 @@ class Target(models.Model):
         #search_fields = ('',)
 
     def __str__(self):
-        return "Target: %s (%s)" % (self.key, self.target_url)
+        return "Target: %s (%s)" % (self.key, self.target_url[:30])
 
     def save(self):
         if self.key:
