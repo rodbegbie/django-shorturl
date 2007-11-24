@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 from random import choice
 
 # Create your models here.
@@ -8,14 +7,24 @@ class Target(models.Model):
     
     key = models.CharField(maxlength=10, primary_key=True)
     target_url = models.URLField(verify_exists=True, unique=True, core=True, db_index=True)
-    added = models.DateTimeField(default=datetime.datetime.now(), editable=False)
+    added = models.DateTimeField(auto_now_add=True, editable=False)
 
     class Admin:
-        list_display = ('key', 'target_url', 'added')
+        list_display = ('key', 'trimmed_target_url', 'added')
         #search_fields = ('',)
+    
+    def trimmed_target_url(self):
+        if len(self.target_url) < 50:
+            return self.target_url
+        else:
+            return self.target_url[:50]+"..."    
+    trimmed_target_url.short_description = "Target URL"
+    
+    class Meta:
+        ordering = ('-added',)
 
     def __str__(self):
-        return "Target: %s (%s)" % (self.key, self.target_url[:30])
+        return "[%s] %s" % (self.key, self.target_url[:50])
 
     def save(self):
         if self.key:
@@ -35,13 +44,21 @@ class Target(models.Model):
 class RedirectHit(models.Model):
     """Track hits to the redirect service"""
     target = models.ForeignKey(Target)
-    hit_time = models.DateTimeField(default=datetime.datetime.now(), editable=False)
+    hit_time = models.DateTimeField(auto_now_add=True, editable=False)
     referer = models.URLField(blank=True, verify_exists=False)
     remote_host = models.IPAddressField(blank=True)
 
     class Admin:
-        list_display = ('hit_time', 'remote_host', 'target', 'referer')
+        list_display = ('hit_time', 'remote_host', 'target', 'trimmed_referer')
         #search_fields = ('',)
 
     def __str__(self):
         return "RedirectHit"
+
+    def trimmed_referer(self):
+        if len(self.referer) < 50:
+            return self.referer
+        else:
+            return self.referer[:50]+"..."    
+    trimmed_referer.short_description = "Referer"
+
