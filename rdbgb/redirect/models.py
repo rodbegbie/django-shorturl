@@ -1,7 +1,6 @@
 from django.db import models
 from random import choice
 
-# Create your models here.
 class Target(models.Model):
     """URL to be redirected to"""
     
@@ -24,7 +23,7 @@ class Target(models.Model):
         ordering = ('-added',)
 
     def __str__(self):
-        return "[%s] %s" % (self.key, self.target_url[:50])
+        return "[%s] %s" % (self.key, self.trimmed_target_url())
 
     def save(self):
         if self.key:
