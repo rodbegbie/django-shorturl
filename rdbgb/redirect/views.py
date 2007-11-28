@@ -11,6 +11,7 @@ def redirect(request, key):
         hit.target = target
         hit.referer = request.META.get("HTTP_REFERER", "")
         hit.remote_host = request.META.get("REMOTE_ADDR", "")
+	hit.remote_host = request.META.get("HTTP_X_FORWARDED_FOR", hit.remote_host)
         hit.save()
     except:
         pass
