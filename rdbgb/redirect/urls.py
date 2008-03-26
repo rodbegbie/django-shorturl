@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',)
 
 urlpatterns += patterns('rdbgb.redirect.views',
-    (r'^(?P<key>[a-zA-Z0-9]{1,10})/', 'redirect'),    
+    (r'^(?P<key>[a-zA-Z0-9]{1,10})[\,\)]*[\./]', 'redirect'),    
 )
 
 urlpatterns += patterns('django.views.generic.simple',
