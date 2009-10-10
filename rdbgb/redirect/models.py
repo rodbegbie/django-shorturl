@@ -9,7 +9,7 @@ class Target(models.Model):
     """URL to be redirected to"""
     
     key = models.CharField(max_length=10, primary_key=True, default=new_key)
-    target_url = models.URLField(verify_exists=True, unique=True, db_index=True)
+    target_url = models.URLField(verify_exists=False, unique=True, db_index=True)
     added = models.DateTimeField(auto_now_add=True, editable=False)
 
     def trimmed_target_url(self):
