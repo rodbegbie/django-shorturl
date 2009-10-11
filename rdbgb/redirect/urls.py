@@ -8,5 +8,6 @@ urlpatterns += patterns('django.views.generic.simple',
 )
 
 urlpatterns += patterns('rdbgb.redirect.views',
+    (r'^create_a_new_redirect$', 'new_redirect'),    
     (r'^(?P<key>[a-zA-Z0-9]{1,10})[\,\)]*[\./]', 'redirect'),    
 )
