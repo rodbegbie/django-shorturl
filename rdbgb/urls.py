@@ -4,7 +4,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    (r'^adm/(.*)', admin.site.root),
+    (r'^adm/', include(admin.site.urls)),
     
     (r'', include('rdbgb.redirect.urls')),
 )
